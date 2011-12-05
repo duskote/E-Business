@@ -17,7 +17,7 @@
 <h1>${title} <small> Twitter API integration</small></h1>
 </div>
 <div class="row">
-<div class="span10"><t:body /></div>
+<div class="span12"><t:body /></div>
 <div class="span4"><t:delegate to="sidebar" /></div>
 </div>
 </div>

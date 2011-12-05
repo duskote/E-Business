@@ -1,7 +1,6 @@
 <html t:type="layout" title="E-Business"
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
 	xmlns:p="tapestry:parameter">
-<t:eventlink event="authorize" class="btn">Authorize</t:eventlink>
 
 <t:eventlink event="updateStatus" class="btn info">Update Status</t:eventlink>
 

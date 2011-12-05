@@ -19,6 +19,7 @@ import finki.ukim.mk.services.impl.BaseOAuthServiceImpl;
 import finki.ukim.mk.services.impl.GenericServiceImpl;
 import finki.ukim.mk.services.impl.Tweet;
 import finki.ukim.mk.services.impl.TwitterServiceImpl;
+import finki.ukim.mk.services.impl.UserServiceImpl;
 
 /**
  * This module is automatically included as part of the Tapestry IoC Registry,
@@ -40,6 +41,7 @@ public class TwitterModule {
 		binder.bind(OAuthConfiguration.class);
 
 		binder.bind(GenericService.class, GenericServiceImpl.class);
+		binder.bind(UserService.class, UserServiceImpl.class);
 	}
 
 	public TwitterService buildTwitterService() {

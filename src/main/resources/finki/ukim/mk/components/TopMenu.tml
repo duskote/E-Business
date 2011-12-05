@@ -1,15 +1,39 @@
-<t:container xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+<t:container
+	xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'
+	xmlns:p="tapestry:parameter">
 
-   <div class="topbar">
-<div class="fill">
-<div class="container"><a class="brand" href="#">Twitter API</a>
-<ul class="nav">
-	<li class="active"><a href="#">Home</a></li>
-	<li><a href="${aboutLink}">About Us</a></li>
-	<li><a href="#contact">Contact</a></li>
-</ul>
-<a href="#" class="btn info">Connect with Twitter</a></div>
-</div>
-</div>
+	<div class="topbar">
+	<div class="fill">
+	<div class="container"><a class="brand" href="#">Twitter API</a>
+	<ul class="nav">
+		<li class="active"><a href="#">Home</a></li>
+		<li><a href="${aboutLink}">About Us</a></li>
+		<li><a href="#contact">Contact</a></li>
+	</ul>
+
+	<t:if test="user">
+		<div class="pull-right">
+
+			<t:eventlink event="authorize" class="btn info">Authorize</t:eventlink>
+
+		<ul class="nav secondary-nav">
+			<li class="menu" data-dropdown="dropdown"><a href="#" class="menu">${user.email}</a>
+			<ul class="menu-dropdown">
+				<li><t:eventlink event="logout">Logout</t:eventlink></li>
+			</ul>
+			</li>
+		</ul>
+		</div>
+		<p:else>
+			<t:form class="pull-right" t:id="loginForm">
+				<t:textfield value="email" placeholder="E-Mail" class="span2" />
+				<t:passwordfield value="password" placeholder="Password"
+					class="span2" />
+				<t:submit value="Login" />
+			</t:form>
+		</p:else>
+	</t:if></div>
+	</div>
+	</div>
 
 </t:container>

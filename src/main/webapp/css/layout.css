@@ -109,10 +109,6 @@ td { vertical-align: top; }
       .container > footer p {
         text-align: center; /* center align it with the container */
       }
-      .container {
-        width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
-      }
-
       /* The white background content wrapper */
       .content {
         background-color: #fff;
@@ -134,7 +130,7 @@ td { vertical-align: top; }
       }
 
       /* Styles you shouldn't keep as they are for displaying this base example only */
-      .content .span10,
+      .content .span12,
       .content .span4 {
         min-height: 500px;
       }
@@ -147,4 +143,12 @@ td { vertical-align: top; }
 
       .topbar .btn {
         border: 0;
+      }
+      
+      .menu-dropdown{
+      	top:27px;
+      }
+      
+      .topbar a:visited{
+      	color: #BFBFBF;
       }

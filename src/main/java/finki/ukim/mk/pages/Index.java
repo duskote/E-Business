@@ -1,6 +1,5 @@
 package finki.ukim.mk.pages;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.apache.tapestry5.annotations.Property;
@@ -14,9 +13,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.User;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
-import finki.ukim.mk.entities.TwitterUser;
 import finki.ukim.mk.entities.base.BaseEntity;
 import finki.ukim.mk.services.GenericService;
 
@@ -46,39 +42,6 @@ public class Index {
 
 	@Inject
 	private PageRenderLinkSource pageRenderLinkSource;
-
-	public void onAuthorize() throws IOException, TwitterException {
-		Twitter twitter = new TwitterFactory().getInstance();
-		RequestToken requestToken = twitter.getOAuthRequestToken();
-		AccessToken accessToken = null;
-		response.sendRedirect(requestToken.getAuthorizationURL());
-		while (null == accessToken) {
-
-			try {
-				accessToken = twitter.getOAuthAccessToken();
-			} catch (TwitterException te) {
-				if (401 == te.getStatusCode()) {
-					System.out.println("Unable to get the access token.");
-				} else {
-					te.printStackTrace();
-				}
-			}
-		}
-		System.out.println(twitter.verifyCredentials().getId());
-		System.out.println(accessToken.getToken());
-		System.out.println(accessToken.getTokenSecret());
-	}
-
-	private void storeAccessToken(Long userId, AccessToken accessToken) {
-		TwitterUser twitterUser = new TwitterUser();
-		twitterUser.setId(accessToken.getUserId());
-		twitterUser.setToken(accessToken.getToken());
-		twitterUser.setTokenSecret(accessToken.getTokenSecret());
-
-		genericService.save(twitterUser);
-		// store accessToken.getToken()
-		// store accessToken.getTokenSecret()
-	}
 
 	public void onUpdateStatus() throws TwitterException {
 		Twitter twitter = TwitterFactory.getSingleton();

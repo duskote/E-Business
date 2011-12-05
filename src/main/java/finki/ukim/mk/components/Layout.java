@@ -14,11 +14,10 @@ import org.apache.tapestry5.ioc.annotations.Symbol;
  * Layout component for pages of application twitter.
  */
 @Import(stylesheet = { "context:css/bootstrap.min.css",
-		"context:css/layout.css" }, library = { "context:js/jquery-1.7.min.js" })
+		"context:css/layout.css" }, library = { "context:js/jquery-1.7.min.js",
+		"context:js/bootstrap-dropdown.js", "context:js/bootstrap-twipsy.js" })
 public class Layout {
-	/**
-	 * The page title, for the <title> element and the <h1>element.
-	 */
+
 	@Property
 	@Parameter(required = true, defaultPrefix = BindingConstants.LITERAL)
 	private String title;
