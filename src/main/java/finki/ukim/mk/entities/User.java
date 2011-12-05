@@ -33,7 +33,7 @@ public class User extends BaseEntity {
 		this.passwordHash = passwordHash;
 	}
 
-	@OneToOne()
+	@OneToOne
 	public TwitterUser getTwitterUser() {
 		return twitterUser;
 	}
