@@ -1,0 +1,52 @@
+<html t:type="layout" title="E-Business"
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter">
+<t:eventlink event="authorize" class="btn">Authorize</t:eventlink>
+
+<t:eventlink event="updateStatus" class="btn info">Update Status</t:eventlink>
+
+<t:form t:id="searchForm" zone="statusesZone">
+	<t:textfield value="searchTerm" />
+	<t:submit class="btn info" value="Search" />
+</t:form>
+
+<t:remove>
+	<t:zone t:id="statusesZone" id="statusesZone">
+		<t:loop source="statuses" value="status">
+		
+			<t:eventlink event="viewUserDetails" context="status.user.id" zone="userDetailsZone">
+					<img src="${status.user.profileImageURL}" alt="Profile Picture"
+						title="${status.user.name}" />
+				</t:eventlink>
+			
+			<h2><t:outputraw value="status.text"/></h2>
+		      		${status.user}
+		      	<hr />
+		
+		</t:loop>
+	</t:zone>
+	
+	<p:sidebar>
+		<t:zone t:id="userDetailsZone" id="userDetailsZone">
+			<t:if test="user">
+			<img src="${user.profileImageURL}" alt="Profile Picture"
+					title="${user.name}" /><h2>${user.name}</h2>
+			<small>${user.description}</small>
+			<h3>Total Statuses: ${user.statusesCount}</h3>
+			<h3>Followers: ${user.followersCount}</h3>
+		
+			<h3>Following: ${user.friendsCount}</h3>
+			<h3>Listed: ${user.listedCount}</h3>
+			
+			
+			
+			
+			<p:else>
+			
+				Some initial info about the logged user
+			</p:else>
+			</t:if>
+		</t:zone>
+	</p:sidebar>
+</t:remove>
+</html>

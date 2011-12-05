@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>${title}</title>
+</head>
+<body screen_capture_injected="true">
+
+<t:topMenu />
+
+<div class="container">
+
+<div class="content">
+<div class="page-header">
+<h1>${title} <small> Twitter API integration</small></h1>
+</div>
+<div class="row">
+<div class="span10"><t:body /></div>
+<div class="span4"><t:delegate to="sidebar" /></div>
+</div>
+</div>
+<footer>
+<p>CC Company 2011</p>
+</footer></div>
+<!-- /container -->
+</body>
+</html>

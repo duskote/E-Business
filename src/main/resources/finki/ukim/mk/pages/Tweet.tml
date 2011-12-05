@@ -1,0 +1,8 @@
+<html xmlns:t='http://tapestry.apache.org/schema/tapestry_5_1_0.xsd'>
+
+   <body>
+         ${message}<br/>
+      <a href='#' t:id='twitterconnect' t:type='twitterConnect'>Connect to Twitter</a>
+   </body>
+
+</html>
