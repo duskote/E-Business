@@ -15,7 +15,7 @@ public class User extends BaseEntity {
 
 	private TwitterUser twitterUser;
 
-	@Column(name = "email")
+	@Column(name = "email", nullable = false)
 	public String getEmail() {
 		return email;
 	}
@@ -24,7 +24,7 @@ public class User extends BaseEntity {
 		this.email = email;
 	}
 
-	@Column(name = "password_hash")
+	@Column(name = "password_hash", nullable = false)
 	public String getPasswordHash() {
 		return passwordHash;
 	}

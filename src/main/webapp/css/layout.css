@@ -152,3 +152,10 @@ td { vertical-align: top; }
       .topbar a:visited{
       	color: #BFBFBF;
       }
+	.alerts{
+		position: absolute;
+		top: 42px;
+		width: 400px;
+		left: 50%;
+		margin-left: -200px;
+	}

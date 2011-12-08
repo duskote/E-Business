@@ -9,7 +9,7 @@
 	<t:submit class="btn info" value="Search" />
 </t:form>
 
-<t:remove>
+
 	<t:zone t:id="statusesZone" id="statusesZone">
 		<t:loop source="statuses" value="status">
 		
@@ -36,16 +36,10 @@
 		
 			<h3>Following: ${user.friendsCount}</h3>
 			<h3>Listed: ${user.listedCount}</h3>
-			
-			
-			
-			
 			<p:else>
-			
 				Some initial info about the logged user
 			</p:else>
 			</t:if>
 		</t:zone>
 	</p:sidebar>
-</t:remove>
 </html>

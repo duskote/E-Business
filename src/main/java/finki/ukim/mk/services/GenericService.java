@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 
 public interface GenericService<T, ID extends Serializable> {
-	<V> V findById(Class<V> clazz, ID id);
+	T findById(Class<T> clazz, ID id);
 
-	<V> List<V> findAll(Class<V> clazz);
+	List<T> findAll(Class<T> clazz);
 
 	void refresh(Object object);
 

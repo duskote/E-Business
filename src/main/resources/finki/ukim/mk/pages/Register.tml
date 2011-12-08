@@ -1,0 +1,20 @@
+<html t:type="layout" title="Creating New User Account"
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter">
+
+<t:form clientValidation="none" t:id="createUserForm">
+	<div class="clearfix">
+		<t:errors />
+	</div>
+	<div class="clearfix">
+		<t:label for="emailField">Email</t:label>
+		<t:textfield t:id="emailField" value="email" validate="required, email" />
+	</div>
+	<div class="clearfix">
+		<t:label for="passwordField">Password</t:label>
+		<t:passwordfield value="password" validate="required" />
+	</div>
+	<t:submit value="Create" />
+</t:form>
+
+</html>

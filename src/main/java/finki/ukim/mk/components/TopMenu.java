@@ -23,6 +23,7 @@ import twitter4j.auth.RequestToken;
 import finki.ukim.mk.entities.TwitterUser;
 import finki.ukim.mk.entities.User;
 import finki.ukim.mk.pages.About;
+import finki.ukim.mk.pages.Register;
 import finki.ukim.mk.services.GenericService;
 import finki.ukim.mk.services.UserService;
 
@@ -107,10 +108,14 @@ public class TopMenu {
 		twitterUser.setTwitterId(accessToken.getUserId());
 		twitterUser.setToken(accessToken.getToken());
 		twitterUser.setTokenSecret(accessToken.getTokenSecret());
-		session.saveOrUpdate(twitterUser);
+		session.save(twitterUser);
 
 		User user = getUser();
 		user.setTwitterUser(twitterUser);
 		session.saveOrUpdate(user);
+	}
+
+	public Link getRegisterLink() {
+		return pageRenderLinkSource.createPageRenderLink(Register.class);
 	}
 }

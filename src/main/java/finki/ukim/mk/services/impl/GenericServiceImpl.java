@@ -1,7 +1,6 @@
 package finki.ukim.mk.services.impl;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -15,26 +14,17 @@ public class GenericServiceImpl<T, ID extends Serializable> implements
 	@Inject
 	private Session session;
 
-	@SuppressWarnings("unused")
-	private Class<T> persistentClass;
-
-	@SuppressWarnings("unchecked")
-	public GenericServiceImpl() {
-		this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[0];
-	}
-
 	public Session getSession() {
 		return session;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <V> V findById(Class<V> clazz, ID id) {
-		return (V) getSession().load(clazz, id);
+	public T findById(Class<T> clazz, ID id) {
+		return (T) getSession().load(clazz, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <V> List<V> findAll(Class<V> clazz) {
+	public List<T> findAll(Class<T> clazz) {
 		return session.createCriteria(clazz).list();
 	}
 
