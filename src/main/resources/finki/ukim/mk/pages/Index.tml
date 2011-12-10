@@ -11,18 +11,18 @@
 
 
 	<t:zone t:id="statusesZone" id="statusesZone">
-		<t:loop source="statuses" value="status">
-		
-			<t:eventlink event="viewUserDetails" context="status.user.id" zone="userDetailsZone">
+		<t:if test="twitterUser">
+			<t:loop source="statuses" value="status">
+			
+				<t:eventlink event="viewUserDetails" context="status.user.id" zone="userDetailsZone">
 					<img src="${status.user.profileImageURL}" alt="Profile Picture"
 						title="${status.user.name}" />
 				</t:eventlink>
-			
-			<h2><t:outputraw value="status.text"/></h2>
-		      		${status.user}
-		      	<hr />
-		
-		</t:loop>
+				
+				<span class="h3"><t:outputraw value="status.text"/></span>
+			    <hr />		
+			</t:loop>
+		</t:if>
 	</t:zone>
 	
 	<p:sidebar>

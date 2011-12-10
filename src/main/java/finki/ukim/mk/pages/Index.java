@@ -49,10 +49,9 @@ public class Index extends TwitterBasePage {
 	private Twitter twitter = TwitterFactory.getSingleton();
 
 	void setupRender() {
-		String token = getTwitterUser().getToken();
-		String secret = getTwitterUser().getTokenSecret();
-
-		twitter.setOAuthAccessToken(new AccessToken(token, secret));
+		if (getTwitterUser() != null)
+			twitter.setOAuthAccessToken(new AccessToken(getTwitterUser()
+					.getToken(), getTwitterUser().getTokenSecret()));
 	}
 
 	public void onUpdateStatus() throws TwitterException {

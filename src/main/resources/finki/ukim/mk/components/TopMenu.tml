@@ -13,7 +13,7 @@
 	<t:if test="user">
 
 		<div class="pull-right">
-			<t:if test="!user.twitterUser">
+			<t:if test="user.twitterUser" negate="true">
 				<t:eventlink event="authorize" class="btn info">Authorize</t:eventlink>
 			</t:if>
 
