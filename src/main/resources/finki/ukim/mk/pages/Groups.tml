@@ -1,0 +1,47 @@
+<html t:type="layout" title="Groups"
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter" full="true">
+<t:if test="user">
+	
+	<t:zone t:id="groupZone" id="groupZone" update="show">
+		<ul class="tabs">
+			<t:loop source="groups" value="group">
+				<li class="${groupCssClass}"><t:eventlink event="selectGroup" zone="groupZone"
+					context="group">${group.name} [${group.users.size() }]</t:eventlink>
+				</li>
+			</t:loop>
+		</ul>
+	
+		<t:if test="selectedGroup">
+			<ul class="media-grid">
+				<t:loop source="twitterUsers" value="twitterUser">
+			
+					<li><t:eventlink class="twitpic ${selectedClass}"
+						event="addToGroup" zone="groupZone"
+						context="[selectedGroup, twitterUser.id, twitterUser.screenName, inGroup]"
+						t:mixins="popover" popover.title="${twitterUser.name}"
+						popover.content="${twitterUser.description}">
+						<t:remove>
+								<img src="${twitterUser.profileImageUrl}" alt="Profile Picture"
+									width="48" />
+							</t:remove>
+							add
+					</t:eventlink></li>
+			
+				</t:loop>
+			</ul>
+			
+			<t:eventlink event="deleteGroup" class="btn danger"
+			context="selectedGroup" >Delete Group</t:eventlink>
+		</t:if>
+	</t:zone>
+	<hr />
+	<t:beaneditform t:id="groupForm" object="newGroup" edit="false" />
+	
+	<p:else>
+		<div class="alert-message info">
+			<strong>You must be logged in to see this page</strong>
+		</div>
+	</p:else>
+</t:if>
+</html>

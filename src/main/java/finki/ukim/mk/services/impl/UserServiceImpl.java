@@ -21,10 +21,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public boolean authenticate(String email, String password) {
-		System.out.println((Long) session.createCriteria(User.class)
+		if ((Long) session.createCriteria(User.class)
 				.add(Restrictions.eq("email", email))
 				.add(Restrictions.eq("passwordHash", password))
-				.setProjection(Projections.rowCount()).uniqueResult());
+				.setProjection(Projections.rowCount()).uniqueResult() != 1l)
+			return false;
 
 		User user = (User) session.createCriteria(User.class)
 				.add(Restrictions.eq("email", email))

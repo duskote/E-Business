@@ -4,10 +4,11 @@
 
 	<div class="topbar">
 	<div class="fill">
-	<div class="container"><a class="brand" href="#">Twitter API</a>
+	<div class="container"><a class="brand" href="${homeLink}">Twitter API</a>
 	<ul class="nav">
-		<li class="active"><a href="#">Home</a></li>
-		<li><a href="${aboutLink}">About Us</a></li>
+		<li class="${homeCssClass}"><a href="${homeLink}">Home</a></li>
+		<li class="${groupsCssClass}"><a href="${groupsLink}">Groups</a></li>
+		<li class="${aboutCssClass}"><a href="${aboutLink}">About Us</a></li>
 	</ul>
 
 	<t:if test="user">

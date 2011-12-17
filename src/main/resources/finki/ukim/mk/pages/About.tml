@@ -1,7 +1,13 @@
 <html t:type="layout" title="About twitter"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
-      xmlns:p="tapestry:parameter">
+      xmlns:p="tapestry:parameter" full="true">
 
-    <p>About twitter application ...</p>
+   <div class="hero-unit">
+   <h1>About the application</h1>
+    	 <p>This is a project that demonstrates integration of the very powerful twitter API into a Java web apllication.</p>
+    <p>The application is developed using Tapestry 5.3, and hibernate as object-relational mapper.</p>
+    <p>The source code is open and freely available at Github</p>
+     <a href="https://github.com/duskote/E-Business" title="Github" class="btn primary large">Get the source code</a>
+    </div>
 
 </html>

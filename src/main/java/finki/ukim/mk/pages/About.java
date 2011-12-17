@@ -1,6 +1,7 @@
 package finki.ukim.mk.pages;
 
-public class About
-{
+import finki.ukim.mk.pages.base.TwitterBasePage;
+
+public class About extends TwitterBasePage {
 
 }

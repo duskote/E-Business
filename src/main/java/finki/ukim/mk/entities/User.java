@@ -1,7 +1,11 @@
 package finki.ukim.mk.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -13,7 +17,10 @@ public class User extends BaseEntity {
 
 	private String email, passwordHash;
 
+	private String token, tokenSecret;
 	private TwitterUser twitterUser;
+
+	private List<Group> groups;
 
 	@Column(name = "email", nullable = false)
 	public String getEmail() {
@@ -33,6 +40,24 @@ public class User extends BaseEntity {
 		this.passwordHash = passwordHash;
 	}
 
+	@Column(name = "token")
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	@Column(name = "token_secret")
+	public String getTokenSecret() {
+		return tokenSecret;
+	}
+
+	public void setTokenSecret(String tokenSecret) {
+		this.tokenSecret = tokenSecret;
+	}
+
 	@OneToOne
 	public TwitterUser getTwitterUser() {
 		return twitterUser;
@@ -42,4 +67,12 @@ public class User extends BaseEntity {
 		this.twitterUser = twitterUser;
 	}
 
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
 }

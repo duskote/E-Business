@@ -10,10 +10,10 @@ import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.services.cron.PeriodicExecutor;
 import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Response;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -23,16 +23,21 @@ import twitter4j.auth.RequestToken;
 import finki.ukim.mk.entities.TwitterUser;
 import finki.ukim.mk.entities.User;
 import finki.ukim.mk.pages.About;
+import finki.ukim.mk.pages.Groups;
+import finki.ukim.mk.pages.Index;
 import finki.ukim.mk.pages.Register;
-import finki.ukim.mk.services.GenericService;
 import finki.ukim.mk.services.UserService;
 
 public class TopMenu {
-	@Inject
-	private PageRenderLinkSource pageRenderLinkSource;
 
+	private static final String CSS_ACTIVE_CLASS = "active";
 	@Property
 	private String email, password;
+
+	private Twitter twitter = new TwitterFactory().getInstance();
+
+	@Inject
+	private PageRenderLinkSource pageRenderLinkSource;
 
 	@Inject
 	private UserService userService;
@@ -41,16 +46,45 @@ public class TopMenu {
 	private AlertManager alertManager;
 
 	@Inject
-	private GenericService<TwitterUser, Long> genericService;
+	private Session session;
 
 	@Inject
 	private Response response;
 
 	@Inject
-	private PeriodicExecutor periodicExecutor;
+	private ComponentResources resources;
 
 	public Link getAboutLink() {
 		return pageRenderLinkSource.createPageRenderLink(About.class);
+	}
+
+	public Link getGroupsLink() {
+		return pageRenderLinkSource.createPageRenderLink(Groups.class);
+	}
+
+	public Link getHomeLink() {
+		return pageRenderLinkSource.createPageRenderLink(Index.class);
+	}
+
+	public Link getRegisterLink() {
+		return pageRenderLinkSource.createPageRenderLink(Register.class);
+	}
+
+	/* css class methods */
+
+	public String getHomeCssClass() {
+		return resources.getPage().getClass().equals(Index.class) ? CSS_ACTIVE_CLASS
+				: null;
+	}
+
+	public String getAboutCssClass() {
+		return resources.getPage().getClass().equals(About.class) ? CSS_ACTIVE_CLASS
+				: null;
+	}
+
+	public String getGroupsCssClass() {
+		return resources.getPage().getClass().equals(Groups.class) ? CSS_ACTIVE_CLASS
+				: null;
 	}
 
 	public User getUser() {
@@ -67,11 +101,6 @@ public class TopMenu {
 	void onLogout() {
 		userService.logout();
 	}
-
-	private Twitter twitter = new TwitterFactory().getInstance();
-
-	@Inject
-	private ComponentResources resources;
 
 	public void onAuthorize() throws TwitterException, Exception {
 		RequestToken requestToken = twitter.getOAuthRequestToken();
@@ -95,27 +124,31 @@ public class TopMenu {
 	}
 
 	void onAccessTokenAvailable(AccessToken accessToken) {
+		System.out.println(accessToken);
 		storeAccessToken(accessToken);
 	}
 
-	@Inject
-	private Session session;
-
 	@CommitAfter
 	private void storeAccessToken(AccessToken accessToken) {
-		TwitterUser twitterUser = new TwitterUser();
-		twitterUser.setId(getUser().getId());
-		twitterUser.setTwitterId(accessToken.getUserId());
-		twitterUser.setToken(accessToken.getToken());
-		twitterUser.setTokenSecret(accessToken.getTokenSecret());
-		session.save(twitterUser);
+
+		TwitterUser twitterUser = (TwitterUser) session
+				.createCriteria(TwitterUser.class)
+				.add(Restrictions.eq("twitterId", accessToken.getUserId()))
+				.uniqueResult();
+
+		if (twitterUser == null) {
+			twitterUser = new TwitterUser();
+			twitterUser.setTwitterId(accessToken.getUserId());
+			twitterUser.setTwitterName(accessToken.getScreenName());
+			session.saveOrUpdate(twitterUser);
+		}
 
 		User user = getUser();
+		user.setToken(accessToken.getToken());
+		user.setTokenSecret(accessToken.getTokenSecret());
 		user.setTwitterUser(twitterUser);
 		session.saveOrUpdate(user);
-	}
 
-	public Link getRegisterLink() {
-		return pageRenderLinkSource.createPageRenderLink(Register.class);
+		//
 	}
 }

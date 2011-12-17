@@ -23,6 +23,10 @@ public class Layout {
 	private String title;
 
 	@Property
+	@Parameter(defaultPrefix = BindingConstants.LITERAL, value = "false")
+	private boolean full;
+
+	@Property
 	private String pageName;
 
 	@Property

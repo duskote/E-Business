@@ -8,6 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.tapestry5.beaneditor.DataType;
+import org.apache.tapestry5.beaneditor.Validate;
+import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 
 import finki.ukim.mk.entities.base.BaseEntity;
 
@@ -19,8 +24,9 @@ public class Group extends BaseEntity {
 
 	private User user;
 
-	private List<TwitterUser> users;
+	private List<GroupTwitterUser> twitterUsers;
 
+	@Validate("required")
 	@Column(name = "name", nullable = false)
 	public String getName() {
 		return name;
@@ -30,6 +36,7 @@ public class Group extends BaseEntity {
 		this.name = name;
 	}
 
+	@DataType("longtext")
 	@Column(name = "description")
 	public String getDescription() {
 		return description;
@@ -49,12 +56,21 @@ public class Group extends BaseEntity {
 		this.user = user;
 	}
 
-	@OneToMany
+	@Transient
 	public List<TwitterUser> getUsers() {
-		return users;
+		List<TwitterUser> ret = CollectionFactory.newList();
+		for (GroupTwitterUser gtu : getTwitterUsers()) {
+			ret.add(gtu.getUser());
+		}
+		return ret;
 	}
 
-	public void setUsers(List<TwitterUser> users) {
-		this.users = users;
+	@OneToMany(mappedBy = "group")
+	public List<GroupTwitterUser> getTwitterUsers() {
+		return twitterUsers;
+	}
+
+	public void setTwitterUsers(List<GroupTwitterUser> twitterUsers) {
+		this.twitterUsers = twitterUsers;
 	}
 }

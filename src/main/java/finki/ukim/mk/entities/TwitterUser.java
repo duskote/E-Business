@@ -10,7 +10,8 @@ import finki.ukim.mk.entities.base.BaseEntity;
 @Table(name = "twitter_users")
 public class TwitterUser extends BaseEntity {
 	private Long twitterId;
-	private String token, tokenSecret;
+
+	private String twitterName;
 
 	@Column(name = "twitter_id", nullable = false)
 	public Long getTwitterId() {
@@ -21,21 +22,13 @@ public class TwitterUser extends BaseEntity {
 		this.twitterId = twitterId;
 	}
 
-	@Column(name = "token", nullable = false)
-	public String getToken() {
-		return token;
+	@Column(name = "twitter_name")
+	public String getTwitterName() {
+		return twitterName;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
+	public void setTwitterName(String twitterName) {
+		this.twitterName = twitterName;
 	}
 
-	@Column(name = "token_secret", nullable = false)
-	public String getTokenSecret() {
-		return tokenSecret;
-	}
-
-	public void setTokenSecret(String tokenSecret) {
-		this.tokenSecret = tokenSecret;
-	}
 }
