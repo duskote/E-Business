@@ -14,25 +14,31 @@
 		</ul>
 		<t:if test="user?.twitterUser">
 			<t:loop source="statuses" value="status">
-	
-				<t:eventlink event="viewUserDetails" context="status.user.id"
-					zone="userDetailsZone">
+				<div class="tweet">
+				<div class="tweet-image"><t:eventlink event="viewUserDetails"
+					context="status.user.id" zone="userDetailsZone">
 					<img src="${status.user.profileImageURL}" alt="Profile Picture"
 						title="${status.user.name}" />
-				</t:eventlink>
-	
-				<span class="h3"><t:outputraw value="status.text" /></span>
-				<br />
-				<span class="date">Posted at: ${status.createdAt}</span>
-				<hr />
+				</t:eventlink></div>
+
+				<div class="tweet-content">
+				<div class="tweet-row"><span class="tweet-user-name"> <t:eventlink
+					event="viewUserDetails" context="status.user.id" class="tweet-screen-name"
+					zone="userDetailsZone">${status.user.screenname}</t:eventlink> <span
+					class="tweet-full-name"> ${status.user.name}</span> </span></div>
+
+				<div class="tweet-row"><span class="h3"><t:outputraw
+					value="status.text" /></span></div>
+				<div class="tweet-row"><span class="tweet-timestamp">Posted at:
+				${status.createdAt}</span></div>
+				</div>
+				</div>
 			</t:loop>
 		</t:if>
 	</t:zone>
-	
+
 	<p:else>
-		<div class="alert-message info">
-			You must be logged in.
-		</div>
+		<div class="alert-message info">You must be logged in.</div>
 	</p:else>
 </t:if>
 

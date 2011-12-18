@@ -171,3 +171,43 @@ td { vertical-align: top; }
 	.popover .content{
 		margin: 0;
 	}
+	
+	.tweet{
+		padding: 10px 20px;
+		font-size: 15px;
+		border-bottom: 1px solid #DDD;
+	}
+	
+	.tweet-image {
+		float: left;
+		height: 48px;
+		overflow: hidden;
+		width: 48px;
+		margin-top: 3px;
+	}
+	
+	.tweet-content {
+		margin-left: 58px;
+		min-height: 48px;
+	}
+	
+	.tweet-row {
+		display: block;
+		position: relative;
+		line-height: 15px;
+	}
+	
+	.tweet-screen-name {
+		font-weight: bold;
+		color: #333!important;
+	}
+	
+	.tweet-full-name {
+		color: #999;
+		font-size: 12px;
+	}
+	
+	.tweet-timestamp {
+		color: #999;
+		font-size: 11px;
+	}
