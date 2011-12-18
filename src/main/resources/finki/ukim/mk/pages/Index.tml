@@ -2,36 +2,39 @@
 	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
 	xmlns:p="tapestry:parameter">
 
-<t:eventlink event="updateStatus" class="btn info">Update Status</t:eventlink>
-
-<t:form t:id="searchForm" zone="statusesZone">
-	<t:textfield value="searchTerm" />
-	<t:submit class="btn info" value="Search" />
-</t:form>
-
-<t:zone t:id="statusesZone" id="statusesZone">
-	<ul class="tabs">
-		<t:loop source="groups" value="group">
-			<li class="${activeCssClass}"><t:eventlink event="selectGroup"
-				context="group" zone="statusesZone">${group.name}</t:eventlink></li>
-		</t:loop>
-	</ul>
-	<t:if test="user?.twitterUser">
-		<t:loop source="statuses" value="status">
-
-			<t:eventlink event="viewUserDetails" context="status.user.id"
-				zone="userDetailsZone">
-				<img src="${status.user.profileImageURL}" alt="Profile Picture"
-					title="${status.user.name}" />
-			</t:eventlink>
-
-			<span class="h3"><t:outputraw value="status.text" /></span>
-			<br />
-			<span class="date">Posted at: ${status.createdAt}</span>
-			<hr />
-		</t:loop>
-	</t:if>
-</t:zone>
+<t:if test="user">
+	<t:zone t:id="statusesZone" id="statusesZone">
+		<ul class="tabs">
+			<li class="${allCssClass}"><t:eventlink event="selectGroup"
+				zone="statusesZone">All</t:eventlink></li>
+			<t:loop source="groups" value="group">
+				<li class="${activeCssClass}"><t:eventlink event="selectGroup"
+					context="group" zone="statusesZone">${group.name} [${group.users.size() }]</t:eventlink></li>
+			</t:loop>
+		</ul>
+		<t:if test="user?.twitterUser">
+			<t:loop source="statuses" value="status">
+	
+				<t:eventlink event="viewUserDetails" context="status.user.id"
+					zone="userDetailsZone">
+					<img src="${status.user.profileImageURL}" alt="Profile Picture"
+						title="${status.user.name}" />
+				</t:eventlink>
+	
+				<span class="h3"><t:outputraw value="status.text" /></span>
+				<br />
+				<span class="date">Posted at: ${status.createdAt}</span>
+				<hr />
+			</t:loop>
+		</t:if>
+	</t:zone>
+	
+	<p:else>
+		<div class="alert-message info">
+			You must be logged in.
+		</div>
+	</p:else>
+</t:if>
 
 <p:sidebar>
 	<t:zone t:id="userDetailsZone" id="userDetailsZone">

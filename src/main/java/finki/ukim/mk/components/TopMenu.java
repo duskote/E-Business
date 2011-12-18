@@ -148,7 +148,5 @@ public class TopMenu {
 		user.setTokenSecret(accessToken.getTokenSecret());
 		user.setTwitterUser(twitterUser);
 		session.saveOrUpdate(user);
-
-		//
 	}
 }

@@ -122,6 +122,9 @@ public class Groups extends TwitterBasePage {
 	@CommitAfter
 	@OnEvent(value = "deleteGroup")
 	void handleDeleteGroup(Group group) {
+		for (GroupTwitterUser gtu : group.getTwitterUsers()) {
+			session.delete(gtu);
+		}
 		session.delete(group);
 	}
 }

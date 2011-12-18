@@ -7,21 +7,16 @@ import java.util.List;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.FastTreeMap;
-import org.apache.tapestry5.EventConstants;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.OnEvent;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.PageRenderLinkSource;
-import org.apache.tapestry5.services.Response;
 import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -37,20 +32,9 @@ import finki.ukim.mk.pages.base.TwitterBasePage;
 public class Index extends TwitterBasePage {
 	@Property
 	private Status status;
-	@Inject
-	private AjaxResponseRenderer ajaxResponseRenderer;
-
-	@Inject
-	private Session session;
-
-	@InjectComponent
-	private Zone userDetailsZone, statusesZone;
 
 	@Property
 	private User twitterUser;
-
-	@Property
-	private String searchTerm;
 
 	@Property
 	private Group group;
@@ -58,24 +42,18 @@ public class Index extends TwitterBasePage {
 	@Persist
 	private Group selectedGroup;
 
-	@Inject
-	private Response response;
-
-	@Inject
-	private PageRenderLinkSource pageRenderLinkSource;
-
 	private Twitter twitter = TwitterFactory.getSingleton();
 
-	public void onUpdateStatus() throws TwitterException {
-		List<Status> statuses = twitter.getHomeTimeline();
-
-		for (Status status : statuses) {
-			System.out.println(status.getUser().getName() + ":"
-					+ status.getText());
-		}
-	}
-
 	private SortedMap<Date, Status> dateToStatusesMap;
+
+	@InjectComponent
+	private Zone userDetailsZone, statusesZone;
+
+	@Inject
+	private AjaxResponseRenderer ajaxResponseRenderer;
+
+	@Inject
+	private Session session;
 
 	public Collection<Status> getStatuses() throws TwitterException {
 		if (selectedGroup == null)
@@ -98,18 +76,6 @@ public class Index extends TwitterBasePage {
 		ajaxResponseRenderer.addRender("userDetailsZone", userDetailsZone);
 	}
 
-	@OnEvent(value = EventConstants.SUCCESS, component = "searchForm")
-	void getResults() throws TwitterException {
-
-		Twitter twitter = TwitterFactory.getSingleton();
-		Query query = new Query(searchTerm);
-		QueryResult queryResult = twitter.search(query);
-
-		queryResult.getTweets();
-
-		ajaxResponseRenderer.addRender("statusesZone", statusesZone);
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<Group> getGroups() {
 		return session.createCriteria(Group.class)
@@ -117,14 +83,24 @@ public class Index extends TwitterBasePage {
 	}
 
 	@OnEvent(value = "selectGroup")
-	void handleSelectGroup(Group group) {
+	boolean handleSelectGroup(Group group) {
 		this.selectedGroup = group;
+		ajaxResponseRenderer.addRender(statusesZone);
+		return true; // return true to stop propagating
+	}
+
+	@OnEvent(value = "selectGroup")
+	void handleSelectGroup() {
+		System.err.println("called again");
+		this.selectedGroup = null;
 		ajaxResponseRenderer.addRender(statusesZone);
 	}
 
 	public String getActiveCssClass() {
-		System.out.println(group);
-		System.out.println(selectedGroup);
 		return group.equals(selectedGroup) ? "active" : null;
+	}
+
+	public String getAllCssClass() {
+		return selectedGroup == null ? "active" : null;
 	}
 }

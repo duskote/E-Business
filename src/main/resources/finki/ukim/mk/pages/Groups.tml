@@ -21,11 +21,9 @@
 						context="[selectedGroup, twitterUser.id, twitterUser.screenName, inGroup]"
 						t:mixins="popover" popover.title="${twitterUser.name}"
 						popover.content="${twitterUser.description}">
-						<t:remove>
 								<img src="${twitterUser.profileImageUrl}" alt="Profile Picture"
 									width="48" />
-							</t:remove>
-							add
+						<t:remove>	add</t:remove>
 					</t:eventlink></li>
 			
 				</t:loop>
@@ -36,6 +34,7 @@
 		</t:if>
 	</t:zone>
 	<hr />
+	<h3>Add new group</h3>
 	<t:beaneditform t:id="groupForm" object="newGroup" edit="false" />
 	
 	<p:else>
